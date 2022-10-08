@@ -4,11 +4,13 @@
 #include <QVector>
 #include <vector>
 #include <string>
+#include "core/timer.h"
 
 using namespace std;
 
 int main()
 {
+    Timer timer;
     long long product = 0;
     for(int a=1; a<=998; ++a) {
         for(int b=a; b<=998; ++b) {
@@ -17,16 +19,11 @@ int main()
                 continue;
             }
             if(a*a + b*b == c*c) {
-                qDebug() << "a: " << a;
-                qDebug() << "b: " << b;
-                qDebug() << "c: " << c;
-                qDebug() << "a*a + b*b: " << a*a + b*b;
-                qDebug() << "c*c: " << c*c;
-                qDebug() << "a+b+c: " << a+b+c;
                 product=a*b*c;
             }
         }
     }
     qDebug() << "product: " << product;
+    qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }

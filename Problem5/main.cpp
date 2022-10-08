@@ -3,11 +3,13 @@
 #include <QDebug>
 #include <QVector>
 #include <vector>
+#include "core/timer.h"
 
 using namespace std;
 
 int main()
 {
+    Timer timer;
     int lcm = 1;
     vector<long long> primes;
     vector<bool> sieveVec;
@@ -63,5 +65,6 @@ int main()
         lcm *= pow(f2mc.first,f2mc.second);
     }
     qDebug() << "lcm: " << lcm;
+    qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }

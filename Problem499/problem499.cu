@@ -114,7 +114,7 @@ problem499_cuda(const uint64_t &fortune, const uint64_t &cost, const int &precis
     }
     bool verbose = false;
     std::cout << "begin standard compute" << std::endl;
-    vmt::util::Timer timer;
+    Timer timer;
     double *sp_mat;
     double *v_dev, *r_dev;
     bool checkResidual = false;
@@ -178,13 +178,13 @@ problem499_cuda(const uint64_t &fortune, const uint64_t &cost, const int &precis
     cudaMalloc((void **)&res_norm_dev, sizeof(double));
     bool l2Norm = false;
     double * state_vec = new double[fortune];
-    vmt::util::Timer timer2;
+    Timer timer2;
     double answer = 0;
     double prevAnswer = 1;
     int fortuneDigits = (int)ceil(log10(fortune));
     int check = pow(10,fortuneDigits);
     bool scale=false;
-    vmt::util::Timer timer3;
+    Timer timer3;
     while(res_norm > tol && itr < maxItrs) {
         for(uint64_t i=0; i<numProblems; ++i) {
             uint64_t offset = rowsPerProblem*i;

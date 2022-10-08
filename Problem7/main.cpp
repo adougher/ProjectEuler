@@ -3,11 +3,13 @@
 #include <QDebug>
 #include <QVector>
 #include <vector>
+#include "core/timer.h"
 
 using namespace std;
 
 int main()
 {
+    Timer timer;
     vector<long long> primes;
     vector<bool> sieveVec;
     vector<long long> factors;
@@ -30,5 +32,6 @@ int main()
         }
     }
     qDebug() << "prime 10001: " << primes[10000];
+    qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }

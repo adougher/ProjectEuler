@@ -3,11 +3,13 @@
 #include <QDebug>
 #include <QVector>
 #include <vector>
+#include "core/timer.h"
 
 using namespace std;
 
 int main()
 {
+    Timer timer;
     vector<long long> primes;
     vector<bool> sieveVec;
     vector<long long> factors;
@@ -38,5 +40,6 @@ int main()
         ++i;
     }
     qDebug() << "largest factor: " << factors.back();
+    qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }

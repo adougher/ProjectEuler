@@ -2,11 +2,13 @@
 
 #include <QDebug>
 #include <vector>
+#include "core/timer.h"
 
 using namespace std;
 
 int main()
 {
+    Timer timer;
     vector<int> fibs;
     int sum = 0;
     fibs.push_back(0);
@@ -21,5 +23,6 @@ int main()
         ++index;
     }
     qDebug() << "sum: " << sum;
+    qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }

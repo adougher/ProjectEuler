@@ -4,11 +4,13 @@
 #include <QVector>
 #include <vector>
 #include <string>
+#include "core/timer.h"
 
 using namespace std;
 
 int main()
 {
+    Timer timer;
     long long maxProd = 0;
     string num="73167176531330624919225119674426574742355349194934"
                "96983520312774506326239578318016984801869478851843"
@@ -42,5 +44,6 @@ int main()
         }
     }
     qDebug() << "largest product: " << maxProd;
+    qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }
