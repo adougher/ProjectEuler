@@ -21,7 +21,6 @@ int main()
     for(size_t i=0; i<sz; ++i) {
         sum += digits[i];
     }
-    std::cout << "SCHPANKEE: " << num;
     qDebug() << "sum of digits" << sum;
     qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
