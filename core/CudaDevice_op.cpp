@@ -53,14 +53,14 @@ q_cuda_error()
             cudaGetLastError())};
 }
 
-std::unique_ptr<vmt::CudaDevice>
-vmt::CudaDevice::New()
+std::unique_ptr<CudaDevice>
+CudaDevice::New()
 {
     return std::unique_ptr<CudaDevice>{new CudaDevice_op};
 }
 
 bool
-vmt::CudaDevice_op::init_impl()
+CudaDevice_op::init_impl()
 {
     if (cuInit(0) != CUDA_SUCCESS ||
         cudaDeviceSynchronize() != cudaSuccess) {
@@ -71,7 +71,7 @@ vmt::CudaDevice_op::init_impl()
 }
 
 void
-vmt::CudaDevice_op::show_device_information_impl()
+CudaDevice_op::show_device_information_impl()
 {
     int dc = 0;
     if (cuDeviceGetCount(&dc) != CUDA_SUCCESS) {
@@ -109,7 +109,7 @@ vmt::CudaDevice_op::show_device_information_impl()
 }
 
 bool
-vmt::CudaDevice_op::populate_device_information_impl()
+CudaDevice_op::populate_device_information_impl()
 {
     int dc = 0;
     if(cuDeviceGetCount(&dc) != CUDA_SUCCESS) {
@@ -147,7 +147,7 @@ vmt::CudaDevice_op::populate_device_information_impl()
 }
 
 void
-vmt::CudaDevice_op::reset_impl()
+CudaDevice_op::reset_impl()
 {
     cudaDeviceReset();
 }

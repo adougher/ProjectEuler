@@ -1,5 +1,5 @@
-#ifndef VMT_TIMER_H_
-#define VMT_TIMER_H_
+#ifndef TIMER_H_
+#define TIMER_H_
 
 #include "Api.h"
 #include <chrono>

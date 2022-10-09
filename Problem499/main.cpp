@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
                     "[max block size (optional)] [verbose (optional)]";
         return 1;
     }
-    auto cuda = vmt::CudaDevice::defaultInstance();
+    auto cuda = CudaDevice::defaultInstance();
     cuda->init();
     uint64_t fortune = QString(argv[1]).toULongLong();
     uint64_t cost = QString(argv[2]).toULongLong();

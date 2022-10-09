@@ -4,6 +4,7 @@
 #include <QVector>
 #include <vector>
 #include "core/timer.h"
+#include "core/BigInt.h"
 
 using namespace std;
 
@@ -14,24 +15,10 @@ int main()
     for(int i=100; i<1000; ++i) {
         for(int j=i+1; j<1000; ++j) {
             int mult = i * j;
-            std::vector<int> digits;
-            int ds = 3;
-            int start = 100;
-            while(start < mult) {
-                start *= 10;
-                ++ds;
-            }
-            --ds;
-            int reduce = mult;
-            auto ds_reduce = ds;
-            while(ds_reduce > 0) {
-                start /= 10;
-                digits.push_back(reduce / start);
-                reduce -= digits.back() * start;
-                --ds_reduce;
-            }
-            int lim = ds/2;
-            int k = 0;
+            std::vector<int> digits=BigInt::convertToDigitsVec(mult);
+            auto ds = digits.size();
+            long long lim = ds/2;
+            long long k = 0;
             while(digits[k] == digits[ds-k-1] && k < lim) {
                 ++k;
             }

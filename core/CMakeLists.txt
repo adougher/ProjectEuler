@@ -8,6 +8,12 @@ set(CorePlatformDependentSrc
     CudaDevice_op.cpp
     timer.h
     timer.cpp
+    primes.h
+    primes.cpp
+    BigInt.h
+    BigInt.cpp
+    sets.h
+    sets.cpp
 )
 ADD_LIBRARY(${PROJECT_NAME} SHARED ${CorePlatformDependentSrc})
 target_compile_definitions(${PROJECT_NAME}

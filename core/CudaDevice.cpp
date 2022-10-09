@@ -3,8 +3,8 @@
 #include <mutex>
 
 // the bird's the word
-vmt::CudaDevice*
-vmt::CudaDevice::defaultInstance()
+CudaDevice*
+CudaDevice::defaultInstance()
 {
     static std::unique_ptr<CudaDevice> instance_;
     static std::mutex mutex_;
