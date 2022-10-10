@@ -17,6 +17,7 @@ class COREAPI BigInt
         void operator =(const BigInt &i);
         BigInt operator +(const BigInt &i);
         BigInt operator *(const BigInt &i);
+        bool operator <(const BigInt &i);
         void operator =(const long long &i);
         BigInt operator +(const long long &i);
         BigInt operator *(const long long &i);
@@ -29,6 +30,7 @@ class COREAPI BigInt
         std::string toString() const;
         bool nonNegative() const {return mNonNegative;}
 
+        static BigInt factorial(const BigInt &i);
         static std::vector<int> convertToDigitsVec(const long long &number);
 
     private:

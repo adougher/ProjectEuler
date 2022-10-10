@@ -11,7 +11,6 @@ using namespace std;
 int main()
 {
     Timer timer;
-    vector<long long> factors;
     // x / ln(x) ~ 10001
     long long sieveLen = 120000;
     vector<long long> primes=primes::primes(sieveLen);

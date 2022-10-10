@@ -9,6 +9,15 @@ namespace primes {
 std::vector<long long>
 COREAPI primes(const long long &limit);
 
+std::vector<std::pair<long long,long long>>
+COREAPI primeFactors(const long long &num);
+
+std::vector<long long>
+COREAPI divisors(const long long &num);
+
+std::vector<long long>
+COREAPI properDivisors(const long long &num);
+
 };
 
 #endif

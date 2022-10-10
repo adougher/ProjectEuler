@@ -100,6 +100,29 @@ BigInt::operator *(const BigInt &i)
     return ret;
 }
 
+bool
+BigInt::operator <(const BigInt &i)
+{
+    long long sz1 = digits();
+    long long sz2 = i.digits();
+    if(sz1 < sz2) {
+        return true;
+    }
+    else if(sz1 > sz2) {
+        return false;
+    }
+    auto dVec1 = digitsVec();
+    auto dVec2 = i.digitsVec();
+    int j = sz1 - 1;
+    while(j >= 0) {
+        if(dVec1[j] < dVec2[j]) {
+            return true;
+        }
+        --j;
+    }
+    return false;
+}
+
 BigInt
 BigInt::pow10Mult(const BigInt &i,const long long &power)
 {
@@ -167,6 +190,18 @@ BigInt::operator ^(const long long &i)
     twoPow = (long long)pow(2,twoPow - 1);
     result = result * (copy ^ (i - twoPow));
     return result;
+}
+
+BigInt
+BigInt::factorial(const BigInt &i)
+{
+    BigInt result(1);
+    BigInt count(1);
+    while(count < i) {
+        result = result * count;
+        count = count + BigInt(1);
+    }
+    return result * i;
 }
 
 std::string
