@@ -35,7 +35,7 @@ std::vector<std::pair<long long,long long>>
 primes::primeFactors(const long long &num)
 {
     std::vector<std::pair<long long,long long>> primeFactors;
-    long long sqTarget = (long long)ceil(num/2);
+    long long sqTarget = (long long)floor(sqrt(num));
     vector<long long> primes = primes::primes(sqTarget);
     long long i = 0;
     auto numCp = num;
@@ -50,8 +50,8 @@ primes::primeFactors(const long long &num)
         }
         ++i;
     }
-    if(primeFactors.size() == 0) {
-        primeFactors.push_back({num,1});
+    if(numCp > 1) {
+        primeFactors.push_back({numCp,1});
     }
     return primeFactors;
 }
@@ -59,23 +59,47 @@ primes::primeFactors(const long long &num)
 std::vector<long long>
 primes::divisors(const long long &num)
 {
+    if(num == 1) {
+        return {1};
+    }
     auto pFactors = primeFactors(num);
-    std::vector<long long> unrolled;
+    std::map<long long,std::vector<long long>> unrolled;
     for(const auto &pf : pFactors) {
-        for(long long i=0; i<pf.second; ++i) {
-            unrolled.push_back(pf.first);
+        for(long long i=0; i<=pf.second; ++i) {
+            unrolled[pf.first].push_back(i);
         }
     }
-    auto pSet = sets::powerSet(unrolled);
+    std::vector<std::vector<long long>> divisorVecs;
+    for(auto it=unrolled.begin(); it!=unrolled.end(); ++it) {
+        auto num = (*it).first;
+        auto pows = (*it).second;
+        auto allPows = pows.size();
+        if(divisorVecs.size()) {
+            std::vector<std::vector<long long>> newDivisorVecs;
+            for(size_t i=0; i<allPows; ++i) {
+                auto dVecsCopy = divisorVecs;
+                for(auto &dv : dVecsCopy) {
+                    dv.push_back(pow(num,pows[i]));
+                }
+                newDivisorVecs.insert(newDivisorVecs.end(),dVecsCopy.begin(),dVecsCopy.end());
+            }
+            divisorVecs = newDivisorVecs;
+        }
+        else {
+            for(size_t i=0; i<allPows; ++i) {
+                divisorVecs.push_back({(long long)pow(num,pows[i])});
+            }
+        }
+    }
     std::set<long long> factors;
-    for(const auto &s : pSet) {
-        long long prod = 1;
-        for(const auto &ss : s) {
-            prod *= ss;
+    for(auto &dv : divisorVecs) {
+        long long prod=1;
+        for(const auto &d : dv) {
+            prod *= d;
         }
         factors.insert(prod);
     }
-    std::vector<long long> factorsVec = {1};
+    std::vector<long long> factorsVec;
     for(const auto &s : factors) {
         factorsVec.push_back(s);
     }
