@@ -18,7 +18,7 @@ class COREAPI BigInt
         BigInt operator +(const BigInt &i);
         BigInt operator -(const BigInt &i);
         BigInt operator *(const BigInt &i);
-        bool operator <(const BigInt &i);
+        bool operator <(const BigInt &i) const;
         bool operator ==(const BigInt &i);
         void operator =(const long long &i);
         BigInt operator +(const long long &i);

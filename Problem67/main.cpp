@@ -25,25 +25,19 @@ struct Relation {
 
 static void
 findMaxSum(const std::vector<int> &values,
-           const std::vector<Relation> &relations,
            const Relation &relation,
            int sum,
-           int &maxSum)
+           std::vector<int> &maxFrom)
 {
-    sum += values[relation.index];
+    auto val = values[relation.index];
+    sum += val;
     auto left = relation.leftChild;
     auto right = relation.rightChild;
     if(left == -1) {
-        maxSum = std::max(sum,maxSum);
+        maxFrom[relation.index] = val;
     }
     else {
-        findMaxSum(values,relations,relations[left],sum,maxSum);
-    }
-    if(right == -1) {
-        maxSum = std::max(sum,maxSum);
-    }
-    else {
-        findMaxSum(values,relations,relations[right],sum,maxSum);
+        maxFrom[relation.index] = std::max(sum+maxFrom[left],sum+maxFrom[right]);
     }
 }
 
@@ -62,7 +56,7 @@ int main()
             }
         }
     }
-    int rows = 30;
+    int rows = 100;
     std::vector<Relation> relations;
     for(int i=0; i<rows-1; ++i) {
         int triNum = i * (i+1) / 2;
@@ -78,9 +72,12 @@ int main()
     for(int i=triNum-rows; i<triNum; ++i) {
         relations.push_back(Relation(i,-1,-1));
     }
-    int maxSum = 0;
-    findMaxSum(nums,relations,relations[0],0,maxSum);
-    qDebug() << "max sum: " << maxSum;
+    auto sz = nums.size();
+    std::vector<int> maxFrom(sz,-1);
+    for(int j=(int)sz-1; j >= 0; --j) {
+        findMaxSum(nums,relations[j],0,maxFrom);
+    }
+    qDebug() << "max path: " << maxFrom[0];
     qDebug() << timer.ticks().count() / 1000.0 << "ms";
     return 0;
 }

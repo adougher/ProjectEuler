@@ -164,7 +164,7 @@ BigInt::operator *(const BigInt &i)
 }
 
 bool
-BigInt::operator <(const BigInt &i)
+BigInt::operator <(const BigInt &i) const
 {
     long long sz1 = digits();
     long long sz2 = i.digits();

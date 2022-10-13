@@ -47,8 +47,8 @@ int main()
 ////        std::cout << "bnum2^bnum2: " << (bnum2^bnum2);
 //    }
     auto primes = primes::primes(1000);
-    int maxCycleLen = 0;
-    int maxCycleNum = 1;
+    size_t maxCycleLen = 0;
+    size_t maxCycleNum = 1;
     for(const auto &p : primes) {
         int ten=10 % p;
         std::set<int> els;
@@ -56,7 +56,7 @@ int main()
             els.insert(ten);
             ten=(ten*10) % p;
         }
-        int cylen = els.size();
+        size_t cylen = els.size();
         if(maxCycleLen < cylen) {
             maxCycleLen = cylen;
             maxCycleNum = p;
