@@ -12,6 +12,8 @@ set(CorePlatformDependentSrc
     primes.cpp
     BigInt.h
     BigInt.cpp
+    BigFloat.h
+    BigFloat.cpp
     sets.h
     sets.cpp
 )

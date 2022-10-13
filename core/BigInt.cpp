@@ -75,6 +75,67 @@ BigInt::operator +(const BigInt &i)
 }
 
 BigInt
+BigInt::operator -(const BigInt &i)
+{
+    BigInt more = *this;
+    BigInt less = i;
+    if(more == less) {
+        return BigInt({});
+    }
+    if(!more.nonNegative() && less.nonNegative()) {
+        more.setNonNegative(true);
+        auto res = more + less;
+        res.setNonNegative(false);
+        return res;
+    }
+    else if(!more.nonNegative() && !less.nonNegative()) {
+        less.setNonNegative(true);
+        return less - more;
+    }
+    else if(more.nonNegative() && !less.nonNegative()) {
+        less.setNonNegative(true);
+        return less + more;
+    }
+    bool negative = false;
+    if(more < less) {
+        BigInt temp = more;
+        more = less;
+        less = temp;
+        negative = true;
+    }
+    auto sz1 = more.digits();
+    auto sz2 = less.digits();
+    size_t maxSz = std::max(sz1,sz2);
+    auto dVec1 = more.digitsVec();
+    auto dVec2 = less.digitsVec();
+    dVec1.resize(maxSz);
+    dVec2.resize(maxSz);
+    std::vector<int> result(maxSz);
+    for(size_t i=0; i<maxSz; ++i) {
+        if(dVec1[i] < dVec2[i]) {
+            result[i] = 10 + dVec1[i] - dVec2[i];
+            size_t j = i + 1;
+            while(j < maxSz && dVec1[j] == 0) {
+                dVec1[j] = 9;
+                ++j;
+            }
+            if(j < maxSz) {
+                dVec1[j] -= 1;
+            }
+        }
+        else {
+            result[i] = dVec1[i] - dVec2[i];
+        }
+    }
+    while(result.back() == 0) {
+        result.pop_back();
+    }
+    auto bi = BigInt(result);
+    bi.setNonNegative(!negative);
+    return bi;
+}
+
+BigInt
 BigInt::operator *(const BigInt &i)
 {
     auto sz1 = digits();
@@ -97,6 +158,8 @@ BigInt::operator *(const BigInt &i)
     for(size_t i=0; i<pSz; ++i) {
         ret = ret + pow10Mult(BigInt(polyRep[i]),i);
     }
+    ret.setNonNegative((i.nonNegative() && (*this).nonNegative()) ||
+                       (!i.nonNegative() && !(*this).nonNegative()));
     return ret;
 }
 
@@ -118,9 +181,19 @@ BigInt::operator <(const BigInt &i)
         if(dVec1[j] < dVec2[j]) {
             return true;
         }
+        else if(dVec2[j] < dVec1[j]) {
+            return false;
+        }
         --j;
     }
     return false;
+}
+
+bool
+BigInt::operator ==(const BigInt &i)
+{
+    return mDigits == i.digitsVec() &&
+           mNonNegative == i.nonNegative();
 }
 
 BigInt
