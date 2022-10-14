@@ -277,6 +277,18 @@ BigInt::factorial(const BigInt &i)
     return result * i;
 }
 
+long long
+BigInt::factorial(const long long &i)
+{
+    long long result(1);
+    long long count(1);
+    while(count < i) {
+        result = result * count;
+        count = count + 1;
+    }
+    return result * i;
+}
+
 std::string
 BigInt::toString() const
 {

@@ -35,6 +35,7 @@ class COREAPI BigInt
         void setNonNegative(const bool &b) {mNonNegative=b;}
 
         static BigInt factorial(const BigInt &i);
+        static long long factorial(const long long &i);
         static std::vector<int> convertToDigitsVec(const long long &number);
 
     private:

@@ -18,6 +18,17 @@ COREAPI divisors(const long long &num);
 std::vector<long long>
 COREAPI properDivisors(const long long &num);
 
+long long
+COREAPI lcm(const long long &num1,
+            const long long &num2);
+
+long long
+COREAPI gcd(const long long &num1,
+            const long long &num2);
+
+std::vector<long long>
+COREAPI expand(const std::vector<std::pair<long long,long long>> &pfac);
+
 };
 
 #endif

@@ -57,6 +57,18 @@ primes::primeFactors(const long long &num)
 }
 
 std::vector<long long>
+primes::expand(const std::vector<std::pair<long long,long long>> &pfac)
+{
+    std::vector<long long> expanded;
+    for(const auto & pf : pfac) {
+        for(int i=0; i<pf.second; ++i) {
+            expanded.push_back(pf.first);
+        }
+    }
+    return expanded;
+}
+
+std::vector<long long>
 primes::divisors(const long long &num)
 {
     if(num == 1) {
@@ -112,4 +124,46 @@ primes::properDivisors(const long long &num)
     auto div = divisors(num);
     div.pop_back();
     return div;
+}
+
+long long
+primes::lcm(const long long &num1,
+            const long long &num2)
+{
+    auto p1 = primeFactors(num1);
+    auto p2 = primeFactors(num2);
+    long long prod = 1;
+    for(const auto &p : p1) {
+        bool found=false;
+        for(const auto &q : p2) {
+            if(p.first == q.first) {
+                prod *= pow(p.first,std::max(p.second,q.second));
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            prod *= pow(p.first,p.second);
+        }
+    }
+    for(const auto &p : p2) {
+        bool found=false;
+        for(const auto &q : p1) {
+            if(p.first == q.first) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            prod *= pow(p.first,p.second);
+        }
+    }
+    return prod;
+}
+
+long long
+primes::gcd(const long long &num1,
+            const long long &num2)
+{
+    return num1 * num2 / primes::lcm(num1,num2);;
 }
