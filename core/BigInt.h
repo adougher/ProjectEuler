@@ -37,6 +37,7 @@ class COREAPI BigInt
         static BigInt factorial(const BigInt &i);
         static long long factorial(const long long &i);
         static std::vector<int> convertToDigitsVec(const long long &number);
+        static BigInt base2(const long long &i);
 
     private:
         BigInt pow10Mult(const BigInt &i,const long long &power);

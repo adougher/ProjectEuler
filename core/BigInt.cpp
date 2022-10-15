@@ -268,6 +268,9 @@ BigInt::operator ^(const long long &i)
 BigInt
 BigInt::factorial(const BigInt &i)
 {
+    if(BigInt({})==i) {
+        return BigInt({1});
+    }
     BigInt result(1);
     BigInt count(1);
     while(count < i) {
@@ -277,11 +280,28 @@ BigInt::factorial(const BigInt &i)
     return result * i;
 }
 
+BigInt
+BigInt::base2(const long long &i)
+{
+    std::vector<int> digits;
+    long long cp=i;
+    while(cp > 0) {
+        auto r = cp % 2;
+        digits.push_back(r);
+        cp /= 2;
+    }
+    std::reverse(digits.begin(),digits.end());
+    return BigInt(digits);
+}
+
 long long
 BigInt::factorial(const long long &i)
 {
-    long long result(1);
-    long long count(1);
+    if(i == 0) {
+        return 1;
+    }
+    long long result=1;
+    long long count=1;
     while(count < i) {
         result = result * count;
         count = count + 1;
