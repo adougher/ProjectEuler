@@ -51,6 +51,20 @@ BigInt::operator =(const BigInt &i)
 BigInt
 BigInt::operator +(const BigInt &i)
 {
+    auto ni = i;
+    auto t = (*this);
+    bool flipSign = false;
+    if(ni.nonNegative() && !t.nonNegative()) {
+        t.setNonNegative(true);
+        return ni - t;
+    }
+    else if(!ni.nonNegative() && t.nonNegative()) {
+        ni.setNonNegative(true);
+        return t - ni;
+    }
+    else if(!ni.nonNegative() && !t.nonNegative()) {
+        flipSign = true;
+    }
     auto sz1 = digits();
     auto sz2 = i.digits();
     size_t maxSz = std::max(sz1,sz2);
@@ -71,7 +85,11 @@ BigInt::operator +(const BigInt &i)
     if(carry > 0) {
         result.push_back(carry);
     }
-    return BigInt(result);
+    auto ri = BigInt(result);
+    if(flipSign) {
+        ri.setNonNegative(false);
+    }
+    return ri;
 }
 
 BigInt

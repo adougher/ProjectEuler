@@ -9,7 +9,6 @@
 #include "core/timer.h"
 #include "core/primes.h"
 #include "core/BigInt.h"
-#include <QFile>
 
 using namespace std;
 
