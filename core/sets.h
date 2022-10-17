@@ -6,8 +6,13 @@
 
 namespace sets {
 
-std::vector<std::vector<long long>>
-COREAPI powerSet(const std::vector<long long> &set);
+template <class T>
+std::vector<std::vector<T>>
+COREAPI powerSet(const std::vector<T> &set);
+
+template <class T>
+void
+COREAPI permutations(long long k, T &container,  std::vector<T> &permutations);
 
 };
 

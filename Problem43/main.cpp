@@ -10,6 +10,7 @@
 #include "core/timer.h"
 #include "core/primes.h"
 #include "core/BigInt.h"
+#include "core/sets.h"
 
 using namespace std;
 
@@ -36,9 +37,9 @@ int main()
     auto primes = primes::primes(100);
     long long sum = 0;
     std::vector<long long> digits = {0,1,2,3,4,5,6,7,8,9};
-    std::vector<std::vector<long long>> permutaions;
-    allPermutations((long long)10,digits,permutaions);
-    for(auto digits : permutaions) {
+    std::vector<std::vector<long long>> permutations;
+    sets::permutations((long long)10,digits,permutations);
+    for(auto digits : permutations) {
         std::reverse(digits.begin(),digits.end());
         if(digits[0] == 0) {
             continue;

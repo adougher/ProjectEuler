@@ -9,33 +9,18 @@
 #include "core/timer.h"
 #include "core/primes.h"
 #include "core/BigInt.h"
+#include "core/sets.h"
 
 using namespace std;
-
-static void
-allPermutations(long long k, string &str, std::set<string> &permutations)
-{
-    if(k == 1) {
-        permutations.insert(str);
-    }
-    else {
-        for(long long i=0; i<k; ++i) {
-            allPermutations(k - 1, str, permutations);
-            int swap = k % 2 == 0 ? i : 0;
-            auto temp = str[swap];
-            str[swap] = str[k-1];
-            str[k-1] = temp;
-        }
-    }
-}
 
 int main()
 {
     Timer timer;
     string baseStr("0123456789");
-    std::set<string> permutations;
+    std::vector<string> permutations;
     auto k = baseStr.size();
-    allPermutations(k,baseStr,permutations);
+    sets::permutations(k,baseStr,permutations);
+    std::sort(permutations.begin(),permutations.end());
     int i=1;
     for(auto it=permutations.begin(); it != permutations.end(); ++it) {
         baseStr = *it;
