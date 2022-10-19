@@ -25,6 +25,54 @@ sets::powerSet(const vector<T> &set)
 }
 
 template <class T>
+vector<vector<T>>
+sets::nChoose2Indices(const vector<T> &set)
+{
+    vector<vector<T>> pairs;
+    long long sz = set.size();
+    for(int i=0; i<sz; ++i) {
+        for(int j=i+1; j<sz; ++j) {
+            pairs.push_back({i,j});
+        }
+    }
+    return pairs;
+}
+
+template <class T>
+vector<vector<T>>
+sets::nChoose3Indices(const vector<T> &set)
+{
+    vector<vector<T>> triples;
+    long long sz = set.size();
+    for(int i=0; i<sz; ++i) {
+        for(int j=i+1; j<sz; ++j) {
+            for(int k=j+1; k<sz; ++k) {
+                triples.push_back({i,j,k});
+            }
+        }
+    }
+    return triples;
+}
+
+template <class T>
+vector<vector<T>>
+sets::nChoose4Indices(const vector<T> &set)
+{
+    vector<vector<T>> quaddies;
+    long long sz = set.size();
+    for(int i=0; i<sz; ++i) {
+        for(int j=i+1; j<sz; ++j) {
+            for(int k=j+1; k<sz; ++k) {
+                for(int h=k+1; h<sz; ++h) {
+                    quaddies.push_back({i,j,k,h});
+                }
+            }
+        }
+    }
+    return quaddies;
+}
+
+template <class T>
 void
 sets::permutations(long long k, T &container,  std::vector<T> &permutations)
 {
@@ -46,6 +94,18 @@ sets::permutations(long long k, T &container,  std::vector<T> &permutations)
 template
 vector<vector<long long>>
 COREAPI sets::powerSet<long long>(const vector<long long> &set);
+
+template
+vector<vector<int>>
+COREAPI sets::nChoose2Indices<int>(const vector<int> &set);
+
+template
+vector<vector<int>>
+COREAPI sets::nChoose3Indices<int>(const vector<int> &set);
+
+template
+vector<vector<int>>
+COREAPI sets::nChoose4Indices<int>(const vector<int> &set);
 
 template
 void

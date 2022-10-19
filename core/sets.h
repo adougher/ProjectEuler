@@ -11,6 +11,18 @@ std::vector<std::vector<T>>
 COREAPI powerSet(const std::vector<T> &set);
 
 template <class T>
+std::vector<std::vector<T>>
+COREAPI nChoose2Indices(const std::vector<T> &set);
+
+template <class T>
+std::vector<std::vector<T>>
+COREAPI nChoose3Indices(const std::vector<T> &set);
+
+template <class T>
+std::vector<std::vector<T>>
+COREAPI nChoose4Indices(const std::vector<T> &set);
+
+template <class T>
 void
 COREAPI permutations(long long k, T &container,  std::vector<T> &permutations);
 

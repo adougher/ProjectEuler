@@ -371,3 +371,15 @@ BigInt::convertToDigitsVec(const long long &number)
     std::reverse(digits.begin(),digits.end());
     return digits;
 }
+
+long long
+BigInt::digitsVecToLong(const std::vector<int> &digits)
+{
+    long long num=0;
+    long long p=0;
+    for(const auto &d : digits) {
+        num += d * pow(10,p);
+        ++p;
+    }
+    return num;
+}
