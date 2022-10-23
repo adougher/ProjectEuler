@@ -12,7 +12,6 @@
 #include "core/BigInt.h"
 #include "core/BigFloat.h"
 #include "core/sets.h"
-#include <QFile>
 
 using namespace std;
 

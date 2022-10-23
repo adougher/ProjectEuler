@@ -73,6 +73,26 @@ sets::nChoose4Indices(const vector<T> &set)
 }
 
 template <class T>
+vector<vector<T>>
+sets::nChoose5Indices(const vector<T> &set)
+{
+    vector<vector<T>> quinties;
+    long long sz = set.size();
+    for(int i=0; i<sz; ++i) {
+        for(int j=i+1; j<sz; ++j) {
+            for(int k=j+1; k<sz; ++k) {
+                for(int h=k+1; h<sz; ++h) {
+                    for(int l=h+1; l<sz; ++l) {
+                        quinties.push_back({i,j,k,h,l});
+                    }
+                }
+            }
+        }
+    }
+    return quinties;
+}
+
+template <class T>
 void
 sets::permutations(long long k, T &container,  std::vector<T> &permutations)
 {
@@ -100,12 +120,32 @@ vector<vector<int>>
 COREAPI sets::nChoose2Indices<int>(const vector<int> &set);
 
 template
+vector<vector<long long>>
+COREAPI sets::nChoose2Indices<long long>(const vector<long long> &set);
+
+template
 vector<vector<int>>
 COREAPI sets::nChoose3Indices<int>(const vector<int> &set);
 
 template
+vector<vector<long long>>
+COREAPI sets::nChoose3Indices<long long>(const vector<long long> &set);
+
+template
 vector<vector<int>>
 COREAPI sets::nChoose4Indices<int>(const vector<int> &set);
+
+template
+vector<vector<long long>>
+COREAPI sets::nChoose4Indices<long long>(const vector<long long> &set);
+
+template
+vector<vector<int>>
+COREAPI sets::nChoose5Indices<int>(const vector<int> &set);
+
+template
+vector<vector<long long>>
+COREAPI sets::nChoose5Indices<long long>(const vector<long long> &set);
 
 template
 void

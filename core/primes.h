@@ -2,6 +2,7 @@
 #define PRIMES_H_
 
 #include "Api.h"
+#include "BigInt.h"
 #include <vector>
 
 namespace primes {
@@ -26,8 +27,15 @@ long long
 COREAPI gcd(const long long &num1,
             const long long &num2);
 
+BigInt
+COREAPI gcd(const BigInt &num1,
+            const BigInt &num2);
+
 std::vector<long long>
 COREAPI expand(const std::vector<std::pair<long long,long long>> &pfac);
+
+bool
+COREAPI isPrime(const long long &num);
 
 };
 

@@ -11,7 +11,6 @@
 #include "core/primes.h"
 #include "core/BigInt.h"
 #include "core/sets.h"
-#include <QFile>
 
 using namespace std;
 

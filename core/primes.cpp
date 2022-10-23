@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QVector>
 #include <set>
+#include <random>
 
 using namespace std;
 
@@ -165,5 +166,94 @@ long long
 primes::gcd(const long long &num1,
             const long long &num2)
 {
-    return num1 * num2 / primes::lcm(num1,num2);;
+    bool num1Less = num1 < num2;
+    long long min=num1Less ? num1 : num2;
+    long long max=num1Less ? num2 : num1;
+    while(min > 0) {
+        auto temp = min;
+        min = max % min;
+        max = temp;
+    }
+    return max;
+}
+
+BigInt
+primes::gcd(const BigInt &num1,
+            const BigInt &num2)
+{
+    bool num1Less = num1 < num2;
+    BigInt min=num1Less ? num1 : num2;
+    BigInt max=num1Less ? num2 : num1;
+    while(BigInt({}) < min) {
+        auto temp = min;
+        min = max % min;
+        max = temp;
+    }
+    return max;
+}
+
+static long long
+powMod(const long long &a,
+       const long long &x,
+       const long long &n)
+{
+    if(x == 0) {
+        return 1;
+    }
+    long long result=a;
+    if(x == 1) {
+        return result % n;
+    }
+    long long pows = (long long)floor(log2(x));
+    long long twoPow = 1;
+    while(twoPow <= pows) {
+        result = (result * result) % n;
+        ++twoPow;
+    }
+    twoPow = (long long)pow(2,twoPow - 1);
+    result = (result * powMod(a,x-twoPow,n)) % n;
+    return result;
+}
+
+static bool init=false;
+static std::random_device rd;
+static std::mt19937 mt;
+static std::uniform_int_distribution<long long> dist;
+bool
+primes::isPrime(const long long &n)
+{
+    if(n == 3 || n == 2) {
+        return true;
+    }
+    long long d = n - 1;
+    long long s = 0;
+    while((d & 0x00000001) == 0) {
+        d = d >> 1;
+        ++s;
+    }
+    long long trials = 10;
+    if(!init) {
+        mt = std::mt19937(rd());
+        dist = std::uniform_int_distribution<long long>(2,n-2);
+        init=true;
+    }
+    for(long long k=0; k<trials; ++k) {
+        long long a = dist(mt);
+        long long x = powMod(a,d,n);
+        if(x == 1 || x == n-1) {
+            continue;
+        }
+        bool broken = false;
+        for(int i=0; i < s - 1; ++i) {
+            x = (x*x) % n;
+            if(x == n-1) {
+                broken = true;
+                break;
+            }
+        }
+        if(!broken) {
+            return false;
+        }
+    }
+    return true;
 }

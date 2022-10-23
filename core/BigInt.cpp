@@ -181,6 +181,69 @@ BigInt::operator *(const BigInt &i)
     return ret;
 }
 
+BigInt
+BigInt::operator /(const BigInt &i)
+{
+    if(*this < i) {
+        return BigInt({0});
+    }
+    if(*this == i) {
+        return BigInt({1});
+    }
+    if(BigInt({1}) == i) {
+        return *this;
+    }
+    std::vector<int> resDig;
+    BigInt dividend = *this;
+    BigInt divisor = i;
+    auto divVec = dividend.digitsVec();
+    std::reverse(divVec.begin(),divVec.end());
+    size_t index = 0;
+    auto dvs = divVec.size();
+    std::vector<int> vec;
+    while(1) {
+        if(index >= dvs) {
+            break;
+        }
+        auto bi = BigInt(vec);
+        while(vec.size() < dvs && bi < divisor) {
+            vec.insert(vec.begin(),divVec[index]);
+            bi = BigInt(vec);
+            ++index;
+        }
+        int mult = 1;
+        auto divCopy = divisor;
+        while(divCopy * mult < bi) {
+            ++mult;
+        }
+        if(bi < divCopy * mult) {
+            --mult;
+        }
+        divCopy = divCopy * mult;
+        resDig.push_back(mult);
+        auto diff = bi - divCopy;
+        if(BigInt({}) == diff) {
+            vec.clear();
+        }
+        else {
+            vec = diff.digitsVec();
+        }
+//        qDebug() << "vec: " << QVector<int>::fromStdVector(vec);
+    }
+    std::reverse(resDig.begin(),resDig.end());
+    return BigInt(resDig);
+}
+
+BigInt
+BigInt::operator %(const BigInt &i)
+{
+    auto div = (*this / i);
+    if(div == 0) {
+        return *this;
+    }
+    return (*this - (div * i));
+}
+
 bool
 BigInt::operator <(const BigInt &i) const
 {
@@ -212,6 +275,13 @@ BigInt::operator ==(const BigInt &i)
 {
     return mDigits == i.digitsVec() &&
            mNonNegative == i.nonNegative();
+}
+
+bool
+BigInt::operator !=(const BigInt &i)
+{
+    return mDigits != i.digitsVec() ||
+           mNonNegative != i.nonNegative();
 }
 
 BigInt
@@ -281,6 +351,18 @@ BigInt::operator ^(const long long &i)
     twoPow = (long long)pow(2,twoPow - 1);
     result = result * (copy ^ (i - twoPow));
     return result;
+}
+
+BigInt
+BigInt::operator /(const long long &i)
+{
+    return (*this / BigInt(i));
+}
+
+BigInt
+BigInt::operator %(const long long &i)
+{
+    return (*this % BigInt(i));
 }
 
 BigInt
